@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# usage: ./cmaker.sh <dir_of_cmakelists.txt> [--name:the_name] [-DCMAKE=SOMETHING] [--ems --android [arm x86 x64] --release[:small]]
+# usage: ./lib.sh <dir_of_cmakelists.txt> [--name:the_name] [-DCMAKE=SOMETHING] [--ems --android [arm x86 x64] --release[:small]]
 
 # Change into the script's directory (where CMakeLists.txt lives)
 MY_DIR="$(pwd)"
