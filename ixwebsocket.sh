@@ -14,7 +14,7 @@ MBED_TLS_DEFS=(
 )
 
 # we are not using tls for debug build
-./lib.sh "../$THE_FOLDER" -DBUILD_SHARED_LIBS=ON "${COMMON_FLAGS[@]}" -DCMAKE_BUILD_RPATH=. -DCMAKE_INSTALL_RPATH='$ORIGIN' -DCMAKE_BUILD_RPATH_USE_ORIGIN=TRUE
+./lib.sh "../$THE_FOLDER" -DBUILD_SHARED_LIBS=ON "${COMMON_FLAGS[@]}"
 ./lib.sh "../$THE_FOLDER" --release "${COMMON_FLAGS[@]}"
 # we dont build for emscripten, will use emscripten websocket library
 ./lib.sh "../$THE_FOLDER" --release --android "${COMMON_FLAGS[@]}" "${MBED_TLS_DEFS[@]}" -DMBEDTLS_INCLUDE_DIRS=install/android/Release/arm64-v8a/include

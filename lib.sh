@@ -79,6 +79,14 @@ else
     canon="$NAMED_PROJECT"
 fi
 
+if [[ "$BUILD_TYPE" == "Debug" ]]; then
+    CMAKE_ARGS+=(
+        '-DCMAKE_BUILD_RPATH=.' 
+        '-DCMAKE_INSTALL_RPATH=$ORIGIN'
+        '-DCMAKE_BUILD_RPATH_USE_ORIGIN=TRUE'
+    )
+fi
+
 if [ "$ANDROID" -eq 1 ]; then
     BUILD_DIR="$MY_DIR/build/$canon/$TARGET_OS/$BUILD_TYPE/$ANDROID_ABI"
     INSTALL_DIR="$MY_DIR/install/$TARGET_OS/$BUILD_TYPE/$ANDROID_ABI"
