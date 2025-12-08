@@ -66,6 +66,13 @@ for arg in "$@"; do
   esac
 done
 
+if [ "$TARGET_OS" == "linux" ]; then
+case "$(uname)" in
+    Linux*) TARGET_OS="linux" ;;
+    *)      TARGET_OS="windows" ;;
+esac
+fi
+
 if [ "$ANDROID" -eq 1 ]; then
     CMAKE_ARGS+=("-DANDROID_PLATFORM=21")
     CMAKE_ARGS+=("-DANDROID_NDK=$ANDROID_NDK")
