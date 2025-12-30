@@ -46,9 +46,17 @@ add_library(lua
     source/linit.c
 )
 
-add_executable(lua_exe source/lua.c)
-target_link_libraries(lua_exe PRIVATE lua m)
-target_include_directories(lua_exe PRIVATE source)
-set_target_properties(lua_exe PROPERTIES OUTPUT_NAME lua)
+if(LINUX OR WIN32)
+    # instal lua-repl and lib
+    add_executable(lua_exe source/lua.c)
+    target_link_libraries(lua_exe PRIVATE lua m)
+    target_include_directories(lua_exe PRIVATE source)
+    set_target_properties(lua_exe PROPERTIES OUTPUT_NAME lua)
 
-install(TARGETS lua lua_exe)
+    install(TARGETS lua lua_exe)
+else()
+    # install only the lib
+    install(TARGETS lua)
+endif()
+
+
