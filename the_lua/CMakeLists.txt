@@ -47,6 +47,15 @@ add_library(lua
 )
 
 if(LINUX OR WIN32)
+    if(LINUX)
+        add_compile_definitions(
+            LUA_USE_LINUX
+        )
+    else()
+        add_compile_definitions(
+            LUA_USE_WINDOWS
+        )
+    endif()
     # instal lua-repl and lib
     add_executable(lua_exe source/lua.c)
     target_link_libraries(lua_exe PRIVATE lua m)
