@@ -29,7 +29,7 @@ add_library(lua
     source/lundump.c 
     source/lvm.c 
     source/lzio.c 
-    source/ltests.c
+    # source/ltests.c
     # aux
     source/lauxlib.c
     # lib
@@ -47,6 +47,11 @@ add_library(lua
 )
 
 if(LINUX OR WIN32)
+    set(the_libs
+        lua
+        m
+    )
+
     if(LINUX)
         add_compile_definitions(
             LUA_USE_LINUX
@@ -55,10 +60,14 @@ if(LINUX OR WIN32)
         add_compile_definitions(
             LUA_USE_WINDOWS
         )
+        list(REMOVE_ITEM the_libs m)
     endif()
+
+    # message(FATAL_ERROR ${the_libs})
+
     # instal lua-repl and lib
     add_executable(lua_exe source/lua.c)
-    target_link_libraries(lua_exe PRIVATE lua m)
+    target_link_libraries(lua_exe PRIVATE ${the_libs})
     target_include_directories(lua_exe PRIVATE source)
     set_target_properties(lua_exe PROPERTIES OUTPUT_NAME lua)
 
