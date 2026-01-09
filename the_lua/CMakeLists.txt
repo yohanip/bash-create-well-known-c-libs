@@ -46,25 +46,25 @@ add_library(lua
     source/linit.c
 )
 
-if(LINUX OR WIN32)
-    set(the_libs
-        lua
-        m
-    )
+set(the_libs
+    lua
+    m
+)
 
-    if(LINUX)
+if(WIN32)
+    add_compile_definitions(
+        LUA_USE_WINDOWS
+    )
+    list(REMOVE_ITEM the_libs m)
+else()
+    if(LINUX OR (EMSCRIPTEN EQUAL 1))
         add_compile_definitions(
             LUA_USE_LINUX
         )
-    else()
-        add_compile_definitions(
-            LUA_USE_WINDOWS
-        )
-        list(REMOVE_ITEM the_libs m)
     endif()
+endif()
 
-    # message(FATAL_ERROR ${the_libs})
-
+if(LINUX OR WIN32)
     # instal lua-repl and lib
     add_executable(lua_exe source/lua.c)
     target_link_libraries(lua_exe PRIVATE ${the_libs})
