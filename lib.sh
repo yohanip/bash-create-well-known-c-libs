@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euox pipefail
 
 # usage: ./lib.sh <dir_of_cmakelists.txt> [--name:the_name] [-DCMAKE=SOMETHING] [--ems --android [arm x86 x64] --release[:small]]
 
@@ -18,7 +18,7 @@ fi
 
 # Default settings
 BUILD_TYPE="Debug"
-TARGET_OS="linux"
+TARGET_OS=0
 EMSCRIPTEN=0
 ANDROID=0
 ANDROID_ABI="arm64-v8a"
@@ -68,11 +68,18 @@ for arg in "$@"; do
   esac
 done
 
-if [ "$TARGET_OS" == "linux" ]; then
+if [ "$TARGET_OS" -eq 0 ]; then
 case "$(uname)" in
     Linux*) TARGET_OS="linux" ;;
     *)      TARGET_OS="windows" ;;
 esac
+fi
+
+if [[ "$TARGET_OS" == "windows" ]]; then
+  CMAKE_ARGS+=(
+    -DCMAKE_CXX_COMPILER=g++
+    -DCMAKE_C_COMPILER=gcc
+  )
 fi
 
 if [ "$ANDROID" -eq 1 ]; then
